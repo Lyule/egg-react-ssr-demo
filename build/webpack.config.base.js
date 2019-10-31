@@ -144,46 +144,6 @@ module.exports = {
             }
           }
         }
-        // {
-        //   urlPattern: /\/api\/v1\/nachbaliye\/(battlePersonal|battleTeam)/,
-        //   handler: 'StaleWhileRevalidate',
-        //   options: {
-        //     cacheName: 'local-api',
-        //     cacheableResponse: {
-        //       statuses: [0, 200]
-        //     },
-        //     expiration: {
-        //       maxAgeSeconds: 60 * 60
-        //     }
-        //   }
-        // },
-        // {
-        //   // urlPattern: /^https?:\/\/img\.ucweb\.com\/s\/uae\/g\/5a\/s\/[\w]+\/([\w]+\/)?(\w|-)+\.(png|jpg|jpeg)/,
-        //   urlPattern: /^https?:\/\/img\.ucweb\.com\//,
-        //   handler: 'CacheFirst',
-        //   options: {
-        //     cacheName: 'cdn',
-        //     cacheableResponse: {
-        //       statuses: [0, 200]
-        //     },
-        //     expiration: {
-        //       maxEntries: 30
-        //     }
-        //   }
-        // },
-        // {
-        //   urlPattern: /^https?:\/\/imagessl\.vmate\.in\//,
-        //   handler: 'CacheFirst',
-        //   options: {
-        //     cacheName: 'cdn',
-        //     cacheableResponse: {
-        //       statuses: [0, 200]
-        //     },
-        //     expiration: {
-        //       maxEntries: 30
-        //     }
-        //   }
-        // }
       ]
     })
   ],
