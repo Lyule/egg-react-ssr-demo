@@ -26,13 +26,34 @@ module.exports = {
   baseDir: resolvePath('../'),
   injectCss: isProd ? [manifest["Page.css"]] : [`/static/css/Page.chunk.css`], // 客户端需要加载的静态样式表
   injectScript: isProd ? [
+    `<script>
+    window.onload = function () {
+      window.viewportUnitsBuggyfill.init({
+        hacks: window.viewportUnitsBuggyfillHacks
+      });
+    }
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/service-worker.js')
+      })
+    }
+    </script>`,
+    `<script src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script>`,
     `<script src='${manifest["runtime~Page.js"]}'></script>`,
     `<script src='${manifest["vendor.js"]}'></script>`,
-    `<script src='${manifest["Page.js"]}'></script>`
+    `<script src='${manifest["Page.js"]}'></script>`,
   ] : [
+    `<script>
+    window.onload = function () {
+      window.viewportUnitsBuggyfill.init({
+        hacks: window.viewportUnitsBuggyfillHacks
+      });
+    }
+    </script>`,
+    `<script src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script>`,
     `<script src='/static/js/runtime~Page.js'></script>`,
     `<script src='/static/js/vendor.chunk.js'></script>`,
-    `<script src='/static/js/Page.chunk.js'></script>`
+    `<script src='/static/js/Page.chunk.js'></script>`,
   ], // 客户端需要加载的静态资源文件表
   serverJs: resolvePath(`../dist/Page.server.js`)
 }

@@ -10,6 +10,7 @@ const plugins = [
     '__isBrowser__': false //eslint-disable-line
   })
 ]
+
 module.exports = merge(baseConfig, {
   devtool: isDev ? 'eval-source-map' : '',
   entry: {

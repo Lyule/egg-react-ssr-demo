@@ -94,25 +94,15 @@ const webpackModule = {
   ]
 }
 
-module.exports = {
-  stats: {
-    children: false,
-    entrypoints: false
-  },
-  mode: process.env.NODE_ENV,
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, '../web')
-    },
-    extensions: paths.moduleFileExtensions
-      .map(ext => `.${ext}`)
-  },
-  module: webpackModule,
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: isDev ? 'static/css/[name].css' : 'static/css/[name].[hash:8].css',
-      chunkFilename: isDev ? 'static/css/[name].chunk.css' : 'static/css/[name].chunk.[hash:8].css'
-    }),
+const webpackPlugins = [
+  new MiniCssExtractPlugin({
+    filename: isDev ? 'static/css/[name].css' : 'static/css/[name].[hash:8].css',
+    chunkFilename: isDev ? 'static/css/[name].chunk.css' : 'static/css/[name].chunk.[hash:8].css'
+  })
+]
+
+if (!isDev) {
+  webpackPlugins.push(
     new WorkboxPlugin.GenerateSW({
       swDest: 'service-worker.js',
       importWorkboxFrom: 'local',
@@ -144,8 +134,65 @@ module.exports = {
             }
           }
         }
+        // {
+        //   urlPattern: /\/api\/v1\/nachbaliye\/(battlePersonal|battleTeam)/,
+        //   handler: 'StaleWhileRevalidate',
+        //   options: {
+        //     cacheName: 'local-api',
+        //     cacheableResponse: {
+        //       statuses: [0, 200]
+        //     },
+        //     expiration: {
+        //       maxAgeSeconds: 60 * 60
+        //     }
+        //   }
+        // },
+        // {
+        //   // urlPattern: /^https?:\/\/img\.ucweb\.com\/s\/uae\/g\/5a\/s\/[\w]+\/([\w]+\/)?(\w|-)+\.(png|jpg|jpeg)/,
+        //   urlPattern: /^https?:\/\/img\.ucweb\.com\//,
+        //   handler: 'CacheFirst',
+        //   options: {
+        //     cacheName: 'cdn',
+        //     cacheableResponse: {
+        //       statuses: [0, 200]
+        //     },
+        //     expiration: {
+        //       maxEntries: 30
+        //     }
+        //   }
+        // },
+        // {
+        //   urlPattern: /^https?:\/\/imagessl\.vmate\.in\//,
+        //   handler: 'CacheFirst',
+        //   options: {
+        //     cacheName: 'cdn',
+        //     cacheableResponse: {
+        //       statuses: [0, 200]
+        //     },
+        //     expiration: {
+        //       maxEntries: 30
+        //     }
+        //   }
+        // }
       ]
     })
-  ],
+  )
+}
+
+module.exports = {
+  stats: {
+    children: false,
+    entrypoints: false
+  },
+  mode: process.env.NODE_ENV,
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '../web')
+    },
+    extensions: paths.moduleFileExtensions
+      .map(ext => `.${ext}`)
+  },
+  module: webpackModule,
+  plugins: webpackPlugins,
   performance: false
 }

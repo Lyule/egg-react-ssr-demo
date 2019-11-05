@@ -5,17 +5,6 @@ import { Link } from 'react-router-dom'
 import '@/assets/common.less'
 import './index.less'
 
-// service worker
-const ServiceWorker = () => <script dangerouslySetInnerHTML={{
-  __html: `
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('/service-worker.js')
-      })
-    }
-  `
-}} />
-
 const commonNode = props => (
   // 为了同时兼容ssr/csr请保留此判断，如果你的layout没有内容请使用 props.children ? <div>{ props.children }</div> : ''
   props.children
@@ -42,7 +31,7 @@ const Layout = (props) => {
           <meta charSet='utf-8' />
           <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
           <meta name='theme-color' content='#000000' />
-          <title>React App</title>
+          <title>React App11</title>
           <link href="/public/manifest.json"></link>
           {
             injectCss && injectCss.map(item => <link rel='stylesheet' href={item} key={item} />)
@@ -55,7 +44,6 @@ const Layout = (props) => {
               __html: `window.__USE_SSR__=true; window.__INITIAL_DATA__ =${serialize(serverData)}`
             }} />
           }
-         <ServiceWorker />
           <div dangerouslySetInnerHTML={{
             __html: injectScript && injectScript.join('')
           }} />
